@@ -66,7 +66,62 @@
 					<header>
 						<h2>Color Sao Paulo</h2>
 					</header>
-					
+					<p>Upload an approved map image by selecting the "Choose File" button below and then pressing "Submit the Approved Map Image":</p>
+
+					<label>Image File:</label><br/>
+					<input type="file" id="imageLoader" name="imageLoader"/>
+					<canvas id="imageCanvas" style="border:10px solid #d3d3d3;"></canvas>
+
+					<script>
+						var imageLoader = document.getElementById('imageLoader');
+    					imageLoader.addEventListener('change', handleImage, false);
+						var canvas = document.getElementById('imageCanvas');
+						var ctx = canvas.getContext('2d');
+
+						var mapWidth = 650;
+						var mapHeight = 700;
+		
+						function handleImage(e){
+						    var reader = new FileReader();
+						    reader.onload = function(event){
+						        var img = new Image();
+						        img.onload = function(){
+						        	canvas.width = mapWidth;
+						            canvas.height = mapHeight;
+
+		            			ctx.drawImage(img,0,0, mapWidth, mapHeight);
+
+		            			var coordinates = [[0,0,100,200,3],[100,100,110,210,10], [100,100,11,21,23]];
+		            			drawMapLines(coordinates);
+		        				}
+		        			img.src = event.target.result;
+
+		    				}
+		    				reader.readAsDataURL(e.target.files[0]);     
+						}
+
+						function drawMapLines(coordinates){
+							//indexes
+							x0 = 0;
+							y0 = 1;
+							x1 = 2;
+							y1 = 3;
+							width = 4;
+
+							for(i in coordinates){
+
+							//the 4 is a filler for the filter parameter that the user will choose
+								if (coordinates[i][width] >= 3 && coordinates[i][width] <= 25){
+									ctx.beginPath();
+									ctx.moveTo(coordinates[i][x0],coordinates[i][y0]);
+									ctx.lineTo(coordinates[i][x1], coordinates[i][y1]);
+									ctx.lineWidth=coordinates[i][width];
+									ctx.strokeStyle = '#6A5ACD';
+									ctx.stroke();
+								}
+							}
+						}
+					</script>
 				</div>
 			</section>
 
