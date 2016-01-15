@@ -1,0 +1,2 @@
+./cspteam : general configurations
+./colorscope : app
