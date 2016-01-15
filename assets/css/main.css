@@ -3839,3 +3839,18 @@
 			}
 
 		}
+
+		#amount{
+			border: 0;
+    color: #00cdcf !important;
+    font-weight: bold;
+    padding-left: 200px;
+		}
+		#slider-range{
+			margin: 0 auto;
+    width: 50%;
+}
+#sliderlabel{
+	    margin: 0 auto;
+    width: 500px;
+}

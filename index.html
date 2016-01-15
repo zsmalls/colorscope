@@ -13,6 +13,41 @@
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+ 		 <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+
+  		<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  		<script>
+
+ 			 $(function() {
+ 			 		console.log('Hi')
+		   $( "#slider-range" ).slider({
+
+		      range: true,
+
+		      min: 0,
+
+		      max: 100,
+
+		      values: [ 75, 300 ],
+
+		      slide: function( event, ui ) {
+
+		        $( "#amount" ).val( ui.values[ 0 ] +"m"+ ui.values[ 1 ] +" - m" );
+
+		      }
+
+		    });
+
+		    $( "#amount" ).val( $( "#slider-range" ).slider( "values", 0 ) + 'm - ' +
+
+		       $( "#slider-range" ).slider( "values", 1 )  + 'm');
+
+		  });
+
+  			</script>
+
 	</head>
 	<body>
 			<!-- Header -->
@@ -160,6 +195,17 @@
 						}
 					</script>
 				</div>
+				<p id="sliderlabel">
+
+				  <label for="amount">Price range:</label>
+
+				  <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+
+				</p>
+
+				 
+
+				<div id="slider-range"></div>
 			</section>
 
 		<!-- Three -->
