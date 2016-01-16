@@ -20,8 +20,13 @@
   		<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
   		<script>
 
+			var all_data={coordinates:[[0,0,100,200,3],[100,100,110,210,10], [100,100,11,21,23]]};
+
+			var img;
+
  			 $(function() {
  			 		console.log('Hi')
+
 		   $( "#slider-range" ).slider({
 
 		      range: true,
@@ -30,17 +35,30 @@
 
 		      max: 100,
 
-		      values: [ 75, 300 ],
+		      values: [ 1, 10 ],
 
 		      slide: function( event, ui ) {
 
-		        $( "#amount" ).val( ui.values[ 0 ] +"m"+ ui.values[ 1 ] +" - m" );
+		        $( "#amount" ).val( ui.values[ 0 ] +"m - "+ ui.values[ 1 ] +"m" );
+
+
+			        filtered_data = [];
+			        width = 4;
+
+			        $.each(all_data.coordinates, function(i, val){
+			        	if(ui.values[ 0 ] <= val[width]  && val[width] <= ui.values[ 1 ]){
+							filtered_data.push(val);		        		
+			        	} 
+			        });
+
+			        ctx.drawImage(img,0,0, mapWidth, mapHeight);
+			        drawMapLines(filtered_data);
 
 		      }
 
 		    });
 
-		    $( "#amount" ).val( $( "#slider-range" ).slider( "values", 0 ) + 'm - ' +
+		    $( "#amount" ).val( $( "#slider-range" ).slider( "values", 0 ) + 'm -' +
 
 		       $( "#slider-range" ).slider( "values", 1 )  + 'm');
 
@@ -152,18 +170,26 @@
 
 						var mapWidth = 650;
 						var mapHeight = 700;
+
 		
-						function handleImage(e){
+						function handleImage(e, data){
+
+					    if(typeof variable === 'undefined'){
+								data = all_data;						   
+						 }
+
+						    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
 						    var reader = new FileReader();
 						    reader.onload = function(event){
-						        var img = new Image();
+						        img = new Image();
 						        img.onload = function(){
 						        	canvas.width = mapWidth;
 						            canvas.height = mapHeight;
 
 		            			ctx.drawImage(img,0,0, mapWidth, mapHeight);
 
-		            			var coordinates = [[0,0,100,200,3],[100,100,110,210,10], [100,100,11,21,23]];
+		            			var coordinates = data.coordinates;
 		            			drawMapLines(coordinates);
 		        				}
 		        			img.src = event.target.result;
@@ -197,7 +223,7 @@
 				</div>
 				<p id="sliderlabel">
 
-				  <label for="amount">Price range:</label>
+				  <label for="amount">Desired Street Width:</label>
 
 				  <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
 

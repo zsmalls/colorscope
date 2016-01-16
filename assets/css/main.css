@@ -3845,6 +3845,7 @@
     color: #00cdcf !important;
     font-weight: bold;
     padding-left: 200px;
+    border-radius: 10px
 		}
 		#slider-range{
 			margin: 0 auto;
