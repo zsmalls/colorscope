@@ -20,12 +20,18 @@
   		<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
   		<script>
 
-			var all_data={coordinates:[[0,0,100,200,3],[100,100,110,210,10], [100,100,11,21,23]]};
+			var all_data={coordinates:[
+
+				[0,0,100,200,3]
+				,[100,100,110,210,10]
+				,[100,100,11,21,23]]
+
+
+			};
 
 			var img;
 
  			 $(function() {
- 			 		console.log('Hi')
 
 		   $( "#slider-range" ).slider({
 
@@ -174,12 +180,8 @@
 		
 						function handleImage(e, data){
 
-					    if(typeof variable === 'undefined'){
-								data = all_data;						   
-						 }
 
 						    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
 						    var reader = new FileReader();
 						    reader.onload = function(event){
 						        img = new Image();
@@ -189,10 +191,35 @@
 
 		            			ctx.drawImage(img,0,0, mapWidth, mapHeight);
 
+		            			console.log($("imageLoader").attr("value"));
+
+						    if(typeof data === 'undefined'){
+					 			 /*$.ajax({
+					 			 	url: "http://localhost:8000/colorscope/upload/",
+					 			 	method:"POST",
+					 			 	dataType:"jsonp",
+					 			 	data: $("imageLoader").attr("value"),
+					 			    async: false,
+					 			 	success:function(answer){
+					 			 		console.log(answer);
+					 			 		all_data = answer;
+					 			 	}
+					 			 });*/
+
+								data = all_data;						   
+							 }
+
+
+
+
+
 		            			var coordinates = data.coordinates;
 		            			drawMapLines(coordinates);
 		        				}
+
 		        			img.src = event.target.result;
+
+		        			console.log(img.src)
 
 		    				}
 		    				reader.readAsDataURL(e.target.files[0]);     
