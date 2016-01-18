@@ -1,4 +1,5 @@
 #!/usr/bin/python
+import sys
 import cv2
 import numpy as np
 from scipy import ndimage
@@ -16,8 +17,7 @@ class Filter:
 
     def get_json(self, filename):
         '''Returns: json string file with the format:
-        z1: [x1, y1, x2, y2, x3, y3, ..., width]
-        z2: [x1, y1, x2, y2, ..., width]'''
+        coordinates: [x1, y1, x2, y2, width], [], ..., []'''
 
         orig_img = cv2.imread(filename)
         img = self.skeletonize(orig_img)
@@ -206,22 +206,31 @@ class Filter:
 
     def get_segments(self, intervals):
         '''Construct a list of segments with the
-        average width at the end. This method is used
+        average width between two points. This method is used
         for web API purposes'''
 
-        segments = {}
-        i = 1
+        segments = []
         for s in intervals:
-            segment = []
-            avg = 0
-            for p in s:
-                segment.append(p.col)
-                segment.append(p.row)
-                avg += p.width
-            avg /= float(len(s))
-            segment.append(avg)
-            segments['z' + str(i)] = segment
-            i += 1
+            if len(s) > 3:
+                segments += self.get_segment(s)
+        coordinates = {}
+        coordinates["coordinates"] = segments
+        return coordinates
+
+
+    def get_segment(self, segment):
+        '''Construct a list of drawable segments'''
+
+        segments = []
+        for i in range(1, len(segment)):
+            s = []
+            s.append(segment[i-1].col)
+            s.append(segment[i-1].row)
+            s.append(segment[i].col)
+            s.append(segment[i].row)
+            avg = (segment[i-1].width + segment[i].width) / 2.0
+            s.append(avg)
+            segments.append(s)
         return segments
 
 
