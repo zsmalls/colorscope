@@ -26,7 +26,6 @@
 				,[100,100,110,210,10]
 				,[100,100,11,21,23]]
 
-
 			};
 
 			var img;
@@ -180,7 +179,6 @@
 		
 						function handleImage(e, data){
 
-
 						    ctx.clearRect(0, 0, canvas.width, canvas.height);
 						    var reader = new FileReader();
 						    reader.onload = function(event){
@@ -190,8 +188,6 @@
 						            canvas.height = mapHeight;
 
 		            			ctx.drawImage(img,0,0, mapWidth, mapHeight);
-
-		            			console.log($("imageLoader").attr("value"));
 
 						    if(typeof data === 'undefined'){
 					 			 /*$.ajax({
@@ -209,17 +205,11 @@
 								data = all_data;						   
 							 }
 
-
-
-
-
 		            			var coordinates = data.coordinates;
 		            			drawMapLines(coordinates);
 		        				}
 
 		        			img.src = event.target.result;
-
-		        			console.log(img.src)
 
 		    				}
 		    				reader.readAsDataURL(e.target.files[0]);     
@@ -255,8 +245,6 @@
 				  <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
 
 				</p>
-
-				 
 
 				<div id="slider-range"></div>
 			</section>
