@@ -22,12 +22,21 @@
 
 			var all_data={coordinates:[
 
-				[0,0,100,200,3]
-				,[100,100,110,210,10]
-				,[100,100,11,21,23]]
+				[404,0,447,474,20]
+				,[424,231,357,225,5]
+				,[357,225,345,286,5]
+				,[313,132,357,225,5]
+				,[313,132,266,299,5]
+				,[266,299,280,238,5]
+				,[258,0,313,132,5]
+				,[271,393,251,151,5]
+				,[251,151,266,299,5]
 
 
-			};
+
+
+
+				]};
 
 			var img;
 
@@ -236,14 +245,14 @@
 							for(i in coordinates){
 
 							//the 4 is a filler for the filter parameter that the user will choose
-								if (coordinates[i][width] >= 3 && coordinates[i][width] <= 25){
+							
 									ctx.beginPath();
 									ctx.moveTo(coordinates[i][x0],coordinates[i][y0]);
 									ctx.lineTo(coordinates[i][x1], coordinates[i][y1]);
 									ctx.lineWidth=coordinates[i][width];
 									ctx.strokeStyle = '#6A5ACD';
 									ctx.stroke();
-								}
+							
 							}
 						}
 					</script>
